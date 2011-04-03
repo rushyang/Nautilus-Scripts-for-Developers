@@ -1,0 +1,19 @@
+#!/bin/sh
+
+#for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+#		readlink -f "$uri" | xsel --clipboard --input
+#done
+
+temp=$(mktemp)
+temp2=$(mktemp)
+for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+	dir=`dirname "$uri"`
+	base=`basename "$uri"`
+	#dir=${dir#file://}
+	echo -n "$dir/$base" | awk NF >> $temp
+	#sed 's/\%20/ /g' < $temp > $temp2
+done
+
+cat $temp | xclip -selection clipboard
+rm $temp $temp2
+
