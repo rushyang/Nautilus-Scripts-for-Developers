@@ -8,7 +8,7 @@ This github repository contains some of very useful nautilus scripts. They often
 
 2) Any Prerequisites?
 ~ Well, yeah! some...
-~ To integrate these scripts with GTK+ dialogs I have used program called "zenity". Hence it's not preinstall in any linux distro, Install it with "sudo apt-get install zenity" in Ubuntu. "yum install zenity" (Fedora). If you're using any other distro, you'll have to google. But I reckon it shouldn't be tough.
+~ To integrate these scripts with GTK+ dialogs I have used program called "zenity". Because it's not preinstall in any linux distro, Install it with "sudo apt-get install zenity" in Ubuntu. "yum install zenity" (Fedora). If you're using any other distro, you'll have to google. But I reckon it shouldn't be tough.
 ~ In addition, I have used 'notify-send' to notify the user with OSD. You can install this library - 'libnotify-bin' with "sudo apt-get install libnotify-bin" in Ubuntu. "yum install libnotify-bin" (Fedora).
 ~ If you're using "Compile Java File(s)" script, for obvious reason you need JDK installed in your machine.
 ~ In copy file location script (both), I have used xclip to integrate terminal with clipboard. Install it with "sudo apt-get install xclip"
