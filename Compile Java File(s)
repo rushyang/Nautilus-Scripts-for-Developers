@@ -6,17 +6,21 @@
 # I created this script when I was working on servlets & I found myself very lazy to go into terminal and compile everytime.
 # ~/.source4servlet file contains the commands to export the environment variable for JAVA_HOME, JRE_HOME & CLASSPATH
 
-source "~/.source4servlet"
-
+source "/home/rushyang/.source4servlet"
+errcount=0
 temp=$(mktemp)
 for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
 	base=`basename "$uri"`
 	javac "$base" 2> $temp | zenity --progress --pulsate --auto-close --text="Compiling..." --title="$base" --width=250 --height=125 | sleep 1
 	SIZE=`ls -s "$temp" | awk '{ print $1 }'`
 	#[[ "$SIZE" -ne "0" ]]  && disp=`cat $temp` && zenity --error --text="$disp" --title="Error compiling "$base""
-	[[ "$SIZE" -ne "0" ]] && zenity --text-info --filename="$temp" --title="Error log for $base" --timeout=20 --width=600 --height=600
+	[[ "$SIZE" -ne "0" ]] && zenity --text-info --filename="$temp" --title="Error log for $base" --timeout=20 --width=600 --height=600 && errcount=1
 done
 
 rm $temp
 
-notify-send "Java file(s) compilation task completed." -i gtk-dialog-info
+if [[ "$errcount" -eq "0" ]]; then
+	notify-send "All Java file(s) compiled successfully." -i gtk-dialog-info
+else
+	notify-send "Java file(s) compiled but some errors were found." -i gtk-dialog-error
+fi
