@@ -13,6 +13,6 @@ This github repository contains some of very useful nautilus scripts. They often
 ~ If you're using "Compile Java File(s)" script, for obvious reason you need JDK installed in your machine.
 ~ In copy file location script (both), I have used xclip to integrate terminal with clipboard. Install it with "sudo apt-get install xclip"
 
-You can report any bugs related to my scripts to "rushyangdarji@gmail.com"
+You can report any bugs/problems related to my scripts to "rushyangdarji@gmail.com"
 
 --Rushyang Darji
