@@ -2,7 +2,7 @@
 # This script will make all file persmission 755
 
 temp=$(mktemp)
-trap "rm $temp; exit" 1 2 
+trap "rm $temp" 0 1 2 
 chmod 755 * 2>"$temp"
 SIZE=`ls -s "$temp" | awk '{print $1}'`
 ls -l >> "$temp"
