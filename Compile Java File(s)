@@ -7,13 +7,10 @@
 # ~/.source4servlet file contains the commands to export the environment variable for JAVA_HOME, JRE_HOME & CLASSPATH
 
 source "/home/rushyang/.source4servlet"
-errcount=0
 temp=$(mktemp)
 trap "rm $temp" 0 1 2
 for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
 	base=`basename "$uri"`
 	javac "$base" 2> $temp | zenity --progress --pulsate --auto-close --text="Compiling..." --title="$base" --width=250 --height=125 | sleep 1
-	SIZE=`ls -s "$temp" | awk '{ print $1 }'`
-	#[[ "$SIZE" -ne "0" ]]  && disp=`cat $temp` && zenity --error --text="$disp" --title="Error compiling "$base""
-	[[ "$SIZE" -ne "0" ]] && zenity --text-info --filename="$temp" --title="Error log for $base" --width=600 --height=600
+	[[ -s "$temp" ]] && zenity --text-info --filename="$temp" --title="Error log for $base" --width=600 --height=600
 done
