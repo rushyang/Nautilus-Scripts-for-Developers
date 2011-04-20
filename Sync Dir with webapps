@@ -1,0 +1,17 @@
+#!/bin/bash
+webappsdir='/usr/share/tomcat7/webapps'
+temp=$(mktemp)
+trap "rm $temp; exit" 0 1 2
+
+#zenity --text-info --filename="$temp" --height=600 --width=600 --no-wrap
+
+for i in "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"; do
+	#[[ ! -d "$i" ]] && break
+	dirbase=`basename "$i"`
+	#zenity --info --text="I reached here: $dirbase" 
+	cp -uRv "$dirbase" "$webappsdir" 1>$temp 2>&1
+	#if [[ -d "$webappsdir"/"$dirbase" ]]; then 
+	#	ch=`zenity --question --text="Directory Name $dirbase already exists in webapps. Overwrite?"; echo $?`		
+done
+
+[[ -s "$temp" ]] && zenity --text-info --filename="$temp" --height=600 --width=600
