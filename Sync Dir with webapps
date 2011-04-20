@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 webappsdir='/usr/share/tomcat7/webapps'
 temp=$(mktemp)
 trap "rm $temp; exit" 0 1 2
