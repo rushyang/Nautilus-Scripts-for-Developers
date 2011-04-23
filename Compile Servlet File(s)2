@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Code Developed By: Rushyang Darji
+# Initial Build: 20.04.2011
+# Prerequisites: zenity, JDK, libnotify-bin. 
+# This is the updated file after my first script 'Compile java File(s)'. 
+# I wrote this because, again I felt very lazy to make classes directory right beside the 'src'. (I wish I could make src from thought in my mind too!)
+# ~/.source4servlet file contains the commands to export the environment variable for JAVA_HOME, JRE_HOME & CLASSPATH
+
+#[[ -z "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]] && zenity --error --text="No Files were selected! Script will now exit." --no-wrap && exit
+curdir=`echo $NAUTILUS_SCRIPT_CURRENT_URI | cut -d'/' -f3- | sed 's/%20/ /g'`
+#zenity --info --text="$curdir" --no-wrap
+webinfc="`dirname "$curdir"`"
+#zenity --info --text="$webinfc" --no-wrap
+webinf="`basename "$webinfc"`"
+#zenity --info --text="$webinf" --no-wrap
+[[ "$webinf" != "WEB-INF" ]] && zenity --error --text="Your file isn't under WEB-INF/'Any Directory'. Script can't be continued." --no-wrap && exit
+temp2=$(mktemp)
+temp=$(mktemp)
+temp3=$(mktemp)
+trap "rm $temp $temp2 $temp3; exit" 0 1 2
+source "/home/rushyang/.source4servlet"
+for i in "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"; do
+	echo "$i" | sed -n 's/\/home/\n\/home/gp' > $temp2
+done
+#	i=`cat $temp2 | awk NF | head -n1`
+	awk NF $temp2 > $temp3
+
+classes=$webinfc/'classes'
+[[ ! -d "$classes" ]] && mkdir "$classes" 2> $temp
+while read -r uri; do
+#zenity --info --text="$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"
+#for uri in "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"; do
+	base=`basename "$uri"`
+	zenity --info --text="I'm about to compile this file: $base"
+	javac -d "$classes" "$base" 2> $temp | zenity --progress --pulsate --auto-close --text="Compiling..." --title="$base" --width=250 --height=125 | sleep 1
+	[[ -s "$temp" ]] && zenity --text-info --filename="$temp" --title="Error log for $base" --width=600 --height=600
+done < "$temp3"
