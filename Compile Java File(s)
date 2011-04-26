@@ -17,10 +17,11 @@ if [[ ! -z $NAUTILUS_SCRIPT_SELECTED_URIS ]]; then
 	done
 else
 	#Making array of jfiles, containing all java files name inside it `find . -maxdepth 1 -print0 -name "*.java"`
-	jfiles=()
-	while read -r -d $'\0'; do
-		jfiles+=("$REPLY")
-	done < <(ls *.java)
+	#jfiles=()
+	#while read -r -d $'\0'; do
+	#	jfiles+=("$REPLY")
+	#done < <(ls *.java)
+	jfiles=`ls *.java`
 	[[ -z "$jfiles" ]] && zenity --error --text="No Java files were found in current working directory!" --no-wrap && exit
 	for i in *.java; do
 		javac "$i" 2> $temp | zenity --progress --pulsate --auto-close --text="Compiling $i..." --title="$i" --width=250 --height=125 
