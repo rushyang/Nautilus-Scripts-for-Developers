@@ -12,6 +12,7 @@ This github repository contains some of very useful nautilus scripts. They often
 ~ In addition, I have used 'notify-send' to notify the user with OSD. You can install this library - 'libnotify-bin' with "sudo apt-get install libnotify-bin" in Ubuntu. "yum install libnotify-bin" (Fedora).
 ~ If you're using "Compile Java File(s)" script, for obvious reason you need JDK installed in your machine.
 ~ In copy file location script (both), I have used xclip to integrate terminal with clipboard. Install it with "sudo apt-get install xclip"
+~ To use "Install this APK" script, I have used adb (Android Debug Bridge) from Android SDK. You can get it from Android Developers community for free and import the path in script before using it.
 
 You can report any bugs/problems related to my scripts to "rushyangdarji@gmail.com"
 
