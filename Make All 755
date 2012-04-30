@@ -4,6 +4,6 @@
 temp=$(mktemp)
 trap "rm $temp" 0 1 2 
 chmod 755 * 2>"$temp"
-SIZE=`ls -s "$temp" | awk '{print $1}'`
+[[ ! -s "$temp" ]] && exit
 ls -l >> "$temp"
-[[ "$SIZE" -ne "0" ]] && zenity --text-info --filename="$temp" --title="Error log for task 755" --timeout=20 --width=600 --height=600
+[[ -s "$temp" ]] && zenity --text-info --filename="$temp" --title="Error log for task 755" --timeout=20 --width=600 --height=600

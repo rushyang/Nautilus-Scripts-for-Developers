@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 webappsdir='/usr/share/tomcat7/webapps'
 temp=$(mktemp)
 trap "rm $temp; exit" 0 1 2
@@ -15,3 +15,16 @@ for i in "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS"; do
 done
 
 [[ -s "$temp" ]] && zenity --text-info --filename="$temp" --height=600 --width=600
+
+source "/home/rushyang/.source4servlet"
+temp2=$(mktemp)
+trap "rm $temp2" 0 1 2
+sh /usr/share/tomcat7/bin/shutdown.sh 2>$temp 
+sleep 2
+sh /usr/share/tomcat7/bin/startup.sh 2>>$temp 
+
+if [[ -s "$temp" ]]; then
+	disp=`cat $temp` && zenity --error --text="$disp" --title="Error log:"
+else	
+	notify-send 'Tomcat Server restarted successfully!' -i gtk-dialog-info
+fi

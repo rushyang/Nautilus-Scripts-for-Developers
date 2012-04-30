@@ -6,8 +6,8 @@ pword=`zenity --entry --text='Enter the exact word(s) of a file of beginning:' -
 
 for i in *
 do
-	if [[ -f "$i" ]]; then
-		fn=${i#"$pword"}
+	#if [[ -f "$i" ]]; then
+		fn=${i%"$pword"}
 		mv "$i" "$fn"
-	fi
+	#fi
 done

@@ -3,11 +3,6 @@
 #for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
 #	gnome-terminal --working-directory=$(uri) &
 #done
-# From Chris Picton
-# Replaces a Script by Martin Enlund
-# Modified to work with spaces in path by Christophe Combelles
-# This script either opens in the current directory,
-# or in the selected directory
 
 base="`echo $NAUTILUS_SCRIPT_CURRENT_URI | cut -d'/' -f3- | sed 's/%20/ /g'`"
 if [ -z "$NAUTILUS_SCRIPT_SELECTED_FILE_PATHS" ]; then
@@ -20,4 +15,4 @@ fi
 gnome-terminal --working-directory="$dir"
 
 
-# This is not my created script. Thanks to developers listed above. -Rushyang Darji
+
