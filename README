@@ -4,7 +4,7 @@ This github repository contains some of very useful nautilus scripts. They often
 ~ Copy your prefered script to ~/.gnome2/nautilus-scripts.
 ~ Open 'gnome-terminal', locate to above path, execute `chmod 755 *` (without back-quote).
 ~ Open a nautilus window, right click > scripts > 'Your copied script should appear here'.
-~ If not, open 'gnome-terminal' and execute `nautilus -q` (without back-quote) to restart nautilus window manager.
+~ If not, open 'gnome-terminal' and execute `nautilus -q` (without back-quote) to restart nautilus window manager. 
 
 2) Any Prerequisites?
 ~ Yes! There are! Totally depends on script you're using.
