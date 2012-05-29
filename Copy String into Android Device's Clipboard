@@ -2,6 +2,7 @@
 # This script will copy into clipboard  of an android device, whats written in zenity's enterybox, very useful to avoid typing in mobile! :P
 # Rushyang Darji
 # Fcuk, I'm awesome!  :D
+# Initial Build: 29th December, 2011
 
 export PATH=${PATH}:"/home/rushyang/android-sdk-linux_x86/platform-tools/"
 temp=$(mktemp)
