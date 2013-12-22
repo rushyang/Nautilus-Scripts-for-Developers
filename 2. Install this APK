@@ -20,3 +20,4 @@ trap "rm $temp" 0 1 2
 adb install "$apkf"  1>>"$temp" 2>&1
 disp=`cat "$temp" | tail -n1`
 notify-send "$disp"'!' -i gtk-dialog-info
+ 
