@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+#		readlink -f "$uri" | xsel --clipboard --input
+#done
+#zenity --info --text="$NAUTILUS_SCRIPT_SELECTED_URIS"
+temp=$(mktemp)
+trap "rm $temp; exit" 0 1 2
+for uri in $NAUTILUS_SCRIPT_SELECTED_URIS; do
+	dir=`dirname "$uri"`
+	base=`basename "$uri"`
+	echo -n "$dir/$base" | awk NF >> $temp
+done
+
+cat $temp | xclip -selection clipboard

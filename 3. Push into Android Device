@@ -1,0 +1,26 @@
+#!/bin/bash
+#Rushyang Darji
+#Initial Build: 29th Feb, 2012
+dirpath='/home/rushyang/.autoscripts/PushLogDir/'
+today=`date +%d%b%Y`
+path="$dirpath/$today"
+echo '***New Push task started*** at'`date +%I:%M:%S`>> "$path"
+export PATH=${PATH}:"/home/rushyang/android-sdk-linux_x86/platform-tools/"
+counter=`echo "$NAUTILUS_SCRIPT_SELECTED_URIS" | grep '^file://' | wc -l`
+if [[ "$counter" -gt 1 ]]; then
+	notify-send "Please select one file @ one tme!" -i gtk-dialog-error
+	exit
+fi
+
+apkf="`echo $NAUTILUS_SCRIPT_SELECTED_URIS | cut -d'/' -f3- | sed 's/%20/ /g'`"
+loc=`zenity --entry --text='Enter the location of directory in your android device:' --entry-text='/sdcard/CM7Walls2'  --height=150 --width=450 --title="Push into connected android device through ADB"`
+[[ "$loc" = '' ]] && exit
+temp=$(mktemp)
+trap "rm $temp" 0 1 2
+adb -d push "$apkf" "$loc" 1>>"$temp" 2>&1
+disp=`cat "$temp" | tail -n1`
+base=`basename "$apkf"`
+echo "$base" "$disp" >> "$path"
+cat "$temp" >> "$path"
+notify-send 'file: '"$base"'**'"$disp"'!' -i gtk-dialog-info
+echo '"***Push task ended*** at'`date +%I:%M:%S` >> "$path"

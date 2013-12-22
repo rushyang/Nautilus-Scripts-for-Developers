@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# From Rushyang Darji
+# I created this script because I found it very annoying to restart tomcat server. 
+# You can also assign a KeyStroke to execute this script. For it, just go to "Keyboard Shortcuts" > add > "bash script_path_here" > assign your fav unique keystroke
+# Initial Build: 02.04.2011
+# Last Build: 02.04.2011
+# It's absolutely not necessary that you have install tomcat7 at same location. Double Cross-Check!
+
+source "/home/rushyang/.source4servlet"
+temp=$(mktemp)
+trap "rm $temp" 0 1 2
+sh /usr/share/tomcat7/bin/shutdown.sh 2>$temp 
+sleep 2
+sh /usr/share/tomcat7/bin/startup.sh 2>>$temp 
+
+if [[ -s "$temp" ]]; then
+	disp=`cat $temp` && zenity --error --text="$disp" --title="Error log:"
+else	
+	notify-send 'Tomcat Server restarted successfully!' -i gtk-dialog-info
+fi
